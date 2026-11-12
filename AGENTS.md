@@ -28,3 +28,7 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+- Product catalog lives in src/lib/products.ts; server functions recompute prices from it so clients can't tamper with totals.
+- Orders and inquiries are inserted only via server functions (src/lib/forms.functions.ts) with the admin client; tables have RLS with no public policies so visitors can't read them.
+- Cart is client-side (localStorage) in src/lib/cart.tsx; checkout creates an order request, no online payment.

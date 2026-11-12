@@ -1,13 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Shell, Border, DmButton } from "@/components/site";
+import { Shell, Border, PageTitle, Field } from "@/components/site";
+import { InquiryForm, selectCls } from "@/components/InquiryForm";
 
 export const Route = createFileRoute("/classes")({
   head: () => ({
     meta: [
       { title: "Crochet Classes — Kalatri by Gayatri" },
-      { name: "description", content: "Learn crochet with Gayatri of Kalatri. Beginner-friendly classes — DM on Instagram to join." },
+      { name: "description", content: "Learn crochet with Gayatri of Kalatri. Beginner-friendly online and in-person classes in Kanpur." },
       { property: "og:title", content: "Crochet Classes with Kalatri" },
-      { property: "og:description", content: "Beginner-friendly crochet classes. DM @kalatri__ to join." },
+      { property: "og:description", content: "Beginner-friendly crochet classes. Send an inquiry to join." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -24,14 +25,9 @@ const steps = [
 function Classes() {
   return (
     <Shell>
-      <section className="mx-auto max-w-4xl px-6 py-20 text-center">
-        <p className="text-sm uppercase tracking-[0.3em] text-primary">सीखिए · Learn</p>
-        <h1 className="mt-4 font-display text-5xl md:text-7xl">Crochet classes</h1>
-        <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">Patient, unhurried lessons with Gayatri. No experience needed — just curiosity and a ball of yarn.</p>
-        <div className="mt-8"><DmButton>DM for classes</DmButton></div>
-      </section>
+      <PageTitle eyebrow="सीखिए · Learn" title="Crochet classes" sub="Patient, unhurried lessons with Gayatri. No experience needed — just curiosity and a ball of yarn." />
       <Border />
-      <section className="mx-auto grid max-w-6xl gap-10 px-6 py-20 md:grid-cols-3">
+      <section className="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-3">
         {steps.map(([n, t, d]) => (
           <div key={n} className="border-t border-foreground/20 pt-6">
             <p className="font-display text-4xl text-primary">{n}</p>
@@ -40,7 +36,19 @@ function Classes() {
           </div>
         ))}
       </section>
-      <p className="px-6 text-center text-sm text-muted-foreground">Batch timings, format and fees are shared over DM.</p>
+      <section className="mx-auto max-w-3xl px-6">
+        <h2 className="mb-2 text-center font-display text-4xl">Class inquiry</h2>
+        <p className="mb-8 text-center text-muted-foreground">Share a few details and we'll send batch timings and fees.</p>
+        <InquiryForm kind="class" detailKeys={["mode", "level"]} messageLabel="Anything you'd like to learn? (optional)" cta="Send class inquiry"
+          extra={<>
+            <Field label="Mode">
+              <select name="mode" className={selectCls} defaultValue="Online">{["Online", "In person (Kanpur)", "Either"].map((o) => <option key={o}>{o}</option>)}</select>
+            </Field>
+            <Field label="Your level">
+              <select name="level" className={selectCls} defaultValue="Complete beginner">{["Complete beginner", "Know the basics", "Intermediate"].map((o) => <option key={o}>{o}</option>)}</select>
+            </Field>
+          </>} />
+      </section>
     </Shell>
   );
 }
