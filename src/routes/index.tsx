@@ -1,23 +1,81 @@
 import { createFileRoute } from "@tanstack/react-router";
+import hero from "@/assets/hero.jpg";
+import { Shell, Border, DmButton, IG } from "@/components/site";
 
-// The home route ships no og:image, so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Kalatri by Gayatri — Handmade Crochet from Kanpur" },
+      { name: "description", content: "Sustainable, handmade, custom crochet toys, bags, wearables and fidgets. Made in Kanpur, shipped pan India." },
+      { property: "og:title", content: "Kalatri by Gayatri — Handmade Crochet" },
+      { property: "og:description", content: "Sustainable · Handmade · Custom crochet from Kanpur. DM to order." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+const items = [
+  { t: "Toys", h: "खिलौने", d: "Soft amigurumi friends, stitched to be hugged for years." },
+  { t: "Bags", h: "थैले", d: "Totes, pouches and sling bags in breathable cotton yarn." },
+  { t: "Wearables", h: "पहनावा", d: "Tops, scrunchies, hair clips and little adornments." },
+  { t: "Fidgets & more", h: "और भी", d: "Keychains, flowers that never wilt, and tiny joys." },
+];
+const values = [
+  ["Sustainable", "Natural cotton yarns, minimal waste, plastic-free packing."],
+  ["Handmade", "Every loop is worked by hand by Gayatri, one piece at a time."],
+  ["Custom", "Your colours, your idea — made just for you."],
+];
+
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <Shell>
+      <section className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-[1fr_1.2fr] md:py-24">
+        <div>
+          <p className="mb-4 text-sm uppercase tracking-[0.3em] text-primary">कला · हाथ से बनी</p>
+          <h1 className="font-display text-5xl leading-[1.05] md:text-7xl">Slow-made crochet, with love from Kanpur.</h1>
+          <p className="mt-6 max-w-md text-lg text-muted-foreground">Toys, bags, wearables and fidgets — sustainable, handmade and custom. Shipping pan India.</p>
+          <div className="mt-8 flex flex-wrap gap-4">
+            <DmButton />
+            <a href={IG} target="_blank" rel="noreferrer" className="inline-flex items-center rounded-full border border-foreground/20 px-6 py-3 text-sm hover:border-primary hover:text-primary">See the work</a>
+          </div>
+        </div>
+        <div className="relative">
+          <div className="absolute -inset-3 rounded-t-full border border-primary/40" aria-hidden />
+          <img src={hero} width={1600} height={1104} alt="Handmade crochet bag, bunny, teddy and rainbow on cotton cloth with marigolds"
+            className="relative aspect-[4/5] w-full rounded-t-full object-cover" />
+        </div>
+      </section>
+      <Border />
+      <section className="mx-auto max-w-6xl px-6 py-20">
+        <h2 className="font-display text-4xl">What we make</h2>
+        <div className="mt-10 grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+          {items.map((i) => (
+            <div key={i.t} className="bg-card p-8">
+              <p className="font-display text-3xl text-primary/70">{i.h}</p>
+              <h3 className="mt-4 text-lg font-medium">{i.t}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{i.d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+      <section className="bg-secondary">
+        <div className="mx-auto grid max-w-6xl gap-10 px-6 py-20 md:grid-cols-3">
+          {values.map(([t, d]) => (
+            <div key={t}>
+              <span className="text-2xl text-accent">✿</span>
+              <h3 className="mt-2 font-display text-2xl">{t}</h3>
+              <p className="mt-2 text-muted-foreground">{d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+      <section className="mx-auto max-w-3xl px-6 py-24 text-center">
+        <h2 className="font-display text-4xl md:text-5xl">Have something in mind?</h2>
+        <p className="mx-auto mt-4 max-w-lg text-muted-foreground">Send a message on Instagram with your idea, colours and timeline. We'll stitch it up and ship it anywhere in India.</p>
+        <div className="mt-8"><DmButton>Message @kalatri__</DmButton></div>
+      </section>
+    </Shell>
   );
 }
